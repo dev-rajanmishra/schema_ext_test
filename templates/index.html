@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JSON-LD Schema Extractor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    input[type="text"] {
+      width: 60%;
+      padding: 10px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 15px;
+    }
+    .card {
+      background: white;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .header {
+      font-weight: bold;
+      cursor: pointer;
+      color: #007BFF;
+    }
+    .json-content {
+      display: none;
+      margin-top: 10px;
+      background: #f8f8f8;
+      padding: 10px;
+      white-space: pre-wrap;
+      border-left: 4px solid #007BFF;
+    }
+  </style>
+</head>
+<body>
+  <h2>Extract JSON-LD Schema Types</h2>
+  <form method="POST">
+    <input type="text" name="url" placeholder="Enter a website URL" required>
+    <button type="submit">Extract</button>
+  </form>
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  {% for schema in schemas %}
+    <div class="card">
+      <div class="header" onclick="toggleJson(this)">▶️ Schema Type: {{ schema.type }}</div>
+      <div class="json-content">{{ schema.json }}</div>
+    </div>
+  {% endfor %}
+
+  <script>
+    function toggleJson(el) {
+      const content = el.nextElementSibling;
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
